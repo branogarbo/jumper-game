@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+    <style>
+      body {
+        margin:0;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="jumper.js"></script>
+    <script>
+      function setup() {
+        createCanvas(windowWidth,windowHeight);
+        jumper.show();
+      }
+
+      function draw() {
+        clear();
+
+        if (keyIsDown(65) && jumper.x > 25) {jumper.x -= 10} // a
+        if (keyIsDown(83) && jumper.x < windowWidth-25) {jumper.x += 10} // d
+
+        jumper.show();
+        jumper.update();
+      }
+
+      function keyPressed() {
+        if (keyCode == 32) {
+          jumper.up();
+        }
+      }
+    </script>
+  </body>
+</html>
