@@ -1,6 +1,9 @@
 <html>
   <head>
     <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+    <script src="jumper.js"></script>
+    <script src="barrier.js"></script>
+    <script src="./lib/collide2D/p5.collide2d.min.js"></script>
     <style>
       body {
         margin:0;
@@ -8,26 +11,85 @@
     </style>
   </head>
   <body>
-    <script src="jumper.js"></script>
     <script>
-      function setup() {
-        createCanvas(windowWidth,windowHeight);
-        jumper.show();
+      var winW = window.innerWidth;
+      var winH = window.innerHeight;
+      var barriers = [];
+      var paused = false;
+      var invincible = false;
+
+      var jumper = new jumper(); 
+
+      for (i = 0; i < 4; i++) {
+        barriers.push(new barrier());
       }
 
+      function setup() {
+        createCanvas(windowWidth,windowHeight);
+
+        rectMode(CENTER);
+
+        jumper.display();
+
+        barriers.forEach(barrier => {
+          barrier.display();
+        });
+      }
+      
       function draw() {
         clear();
-
+        
+        // move jumper laterally
         if (keyIsDown(65) && jumper.x > 25) {jumper.x -= 10} // a
-        if (keyIsDown(83) && jumper.x < windowWidth-25) {jumper.x += 10} // d
-
-        jumper.show();
+        if (keyIsDown(68) && jumper.x < winW-25) {jumper.x += 10} // d
+        
+        // check each barrier for collision
+        barriers.forEach(barrier => {
+          if (!invincible && collideRectCircle(barrier.x - barrier.width/2, barrier.y - barrier.height/2, barrier.width, barrier.height, jumper.x, jumper.y, 2*jumper.radius)) {
+            noLoop();
+          }
+        });
+        
+        // display game elements
+        jumper.display();
+        barriers.forEach(barrier => barrier.display());
+        
+        // update game elements
         jumper.update();
+        barriers.forEach(barrier => barrier.update());
+
+        // invincibility toggle
+        if (invincible) {
+          jumper.color = 'green';
+          
+          textSize(20);
+          fill(0);
+          textAlign(CENTER,CENTER);
+          text('invincible',jumper.x,jumper.y);
+        }
+        
+        else {
+          jumper.color = 'red';
+          textSize(0);
+        }
       }
 
       function keyPressed() {
+        // jump
         if (keyCode == 32) {
           jumper.up();
+        }
+        
+        if (keyCode == 73) {
+          invincible = !invincible;
+        }
+
+        // pause barriers on p keypress
+        if (keyCode == 80) {
+          if (paused) {barriers.forEach(barrier => {barrier.velocity = 20})}
+          else {barriers.forEach(barrier => {barrier.velocity = 0})}
+
+          paused = !paused;
         }
       }
     </script>
