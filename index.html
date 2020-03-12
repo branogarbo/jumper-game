@@ -1,0 +1,105 @@
+<html>
+  <head>
+    <script src="./lib/p5/p5.min.js"></script>
+    <script src="./lib/collide2D/p5.collide2d.min.js"></script>
+    <script src="jumper.js"></script>
+    <script src="barrier.js"></script>
+    <style>
+      body {
+        margin:0;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      var winW = window.innerWidth;
+      var winH = window.innerHeight;
+
+      var jumper;
+      var barriers = [];
+      var paused = false;
+      var end = false;
+      var score = 0;
+      var barrierCount = 5;
+      
+      function setup() {
+        createCanvas(windowWidth,windowHeight);
+
+        rectMode(CENTER);
+
+        jumper = new jumper();
+
+        for (i = 0; i < barrierCount; i++) {
+          barriers.push(new barrier());
+        }
+
+        jumper.display();
+
+        barriers.forEach(barrier => {
+          barrier.display();
+        });
+      }
+      
+      function draw() {
+        clear();
+        
+        // move jumper laterally
+        if (keyIsDown(65) && jumper.x > 25) {jumper.x -= 10} // a
+        if (keyIsDown(68) && jumper.x < winW-25) {jumper.x += 10} // d
+
+        // gravity boost
+        if (keyIsDown(83)) {jumper.gravity = 1.5}
+        else {jumper.gravity = 0.5}
+        
+        // check each barrier for collision
+        barriers.forEach(barrier => {
+          if (!jumper.invincible && collideRectCircle(barrier.x - barrier.width/2, barrier.y - barrier.height/2, barrier.width, barrier.height, jumper.x, jumper.y, 2*jumper.radius)) {
+            barriers.forEach(barrier => barrier.slow());
+            
+            end = true;
+          }
+        });
+
+        // display game elements
+        jumper.display();
+        barriers.forEach(barrier => barrier.display());
+        
+        // update game elements
+        jumper.update();
+        barriers.forEach(barrier => barrier.update());
+
+        // display end game message
+        if (end) {
+          fill(0);
+          textAlign(CENTER);
+          textSize(100);
+          text('GAME OVER',winW/2,winH/2);
+        }
+
+        fill(0);
+        textAlign(LEFT,TOP);
+        textSize(25);
+        text(`score: ${score}`,20,20);
+      }
+      
+      function keyPressed() {
+        // jump
+        if (keyCode == 32) {
+          jumper.up();
+        }
+        
+        if (keyCode == 73) {
+          jumper.invincible = !jumper.invincible;
+        }
+
+        // pause barriers on p keypress
+        if (keyCode == 80) {
+          paused = !paused;
+
+          if (paused) {noLoop()}
+          else {loop()}
+        }
+      }
+    </script>
+  </body>
+</html>
