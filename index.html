@@ -16,25 +16,27 @@
       var winW = window.innerWidth;
       var winH = window.innerHeight;
 
-      var jumper;
+      var jumper1,jumper2;
       var barriers = [];
       var paused = false;
       var end = false;
       var score = 0;
       var barrierCount = 5;
-      
+
       function setup() {
         createCanvas(winW,winH);
 
         rectMode(CENTER);
 
-        jumper = new jumper();
+        jumper1 = new jumper(65,68,83);
+        jumper2 = new jumper(37,39,40);
 
         for (i = 0; i < barrierCount; i++) {
           barriers.push(new barrier());
         }
 
-        jumper.display();
+        jumper1.display();
+        jumper2.display();
 
         barriers.forEach(barrier => {
           barrier.display();
@@ -43,29 +45,15 @@
       
       function draw() {
         clear();
-        
-        // move jumper laterally
-        keyIsDown(65) && jumper.x > 25 ? jumper.x -= 10 : {}; // a
-        keyIsDown(68) && jumper.x < winW-25 ? jumper.x += 10 : {}; // d
-
-        // gravity boost
-        keyIsDown(83) ? jumper.gravity = 1.5 : jumper.gravity = 0.5;
-        
-        // check each barrier for collision
-        barriers.forEach(barrier => {
-          if (!jumper.invincible && collideRectCircle(barrier.x - barrier.width/2, barrier.y - barrier.height/2, barrier.width, barrier.height, jumper.x, jumper.y, 2*jumper.radius)) {
-            barriers.forEach(barrier => barrier.slow());
-
-            end = true;
-          }
-        });
 
         // display game elements
-        jumper.display();
+        jumper1.display();
+        jumper2.display();
         barriers.forEach(barrier => barrier.display());
         
         // update game elements
-        jumper.update();
+        jumper1.update();
+        jumper2.update();
         barriers.forEach(barrier => barrier.update());
 
         // display score
@@ -93,10 +81,12 @@
       
       function keyPressed() {
         // jump
-        keyCode == 32 ? jumper.jump() : {};
+        keyCode == 87 ? jumper1.jump() : {};
+        keyCode == 38 ? jumper2.jump() : {};
         
         // toggle invincibility
-        keyCode == 73 ? jumper.invincible = !jumper.invincible : {};
+        keyCode == 73 ? jumper1.invincible = !jumper1.invincible : {};
+        keyCode == 79 ? jumper2.invincible = !jumper2.invincible : {};
 
         // pause barriers on p keypress
         if (keyCode == 80) {

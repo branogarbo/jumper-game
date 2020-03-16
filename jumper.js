@@ -1,4 +1,4 @@
-function jumper() {
+function jumper(left,right,down) {
   this.radius = 25;
   this.x = winW/4;
   this.y = winH/2;
@@ -28,8 +28,8 @@ function jumper() {
   // this will continuously update the jumper
   this.update = () => {
     this.velocity += this.gravity;
-    this.y += this.velocity;
     this.velocity *= 0.95; // air resistance
+    this.y += this.velocity;
     
     // this prevents jumper from falling through ground
     if (this.y > winH - this.radius) {
@@ -42,6 +42,22 @@ function jumper() {
       this.y = this.radius;
       this.velocity = 0;
     }
+
+    // move jumper laterally
+    keyIsDown(left) && this.x > 25 ? this.x -= 10 : {}; // a
+    keyIsDown(right) && this.x < winW-25 ? this.x += 10 : {}; // d
+
+    // gravity boost
+    keyIsDown(down) ? this.gravity = 1.5 : this.gravity = 0.5;
+
+    // check each barrier for collision
+    barriers.forEach(barrier => {
+      if (!this.invincible && collideRectCircle(barrier.x - barrier.width/2, barrier.y - barrier.height/2, barrier.width, barrier.height, this.x, this.y, 2*this.radius)) {
+        barriers.forEach(barrier => barrier.slow());
+
+        end = true;
+      }
+    });
   }
 
   // function that will take take initial velocity and modify by opposing gravity
