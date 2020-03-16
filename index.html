@@ -45,12 +45,11 @@
         clear();
         
         // move jumper laterally
-        if (keyIsDown(65) && jumper.x > 25) {jumper.x -= 10} // a
-        if (keyIsDown(68) && jumper.x < winW-25) {jumper.x += 10} // d
+        keyIsDown(65) && jumper.x > 25 ? jumper.x -= 10 : {}; // a
+        keyIsDown(68) && jumper.x < winW-25 ? jumper.x += 10 : {}; // d
 
         // gravity boost
-        if (keyIsDown(83)) {jumper.gravity = 1.5}
-        else {jumper.gravity = 0.5}
+        keyIsDown(83) ? jumper.gravity = 1.5 : jumper.gravity = 0.5;
         
         // check each barrier for collision
         barriers.forEach(barrier => {
@@ -69,12 +68,13 @@
         jumper.update();
         barriers.forEach(barrier => barrier.update());
 
+        // display score
         fill(0);
         textAlign(LEFT,TOP);
         textSize(25);
         text(`score: ${score}`,20,20);
         
-        // display end game message
+        // display end message if game ends
         if (end) {
           fill(0);
           textAlign(CENTER);
@@ -82,6 +82,7 @@
           text('GAME OVER',winW/2,winH/2);
         }
 
+        // display pause message if paused
         if (paused && !end) {
           fill(0);
           textAlign(CENTER);
@@ -92,13 +93,10 @@
       
       function keyPressed() {
         // jump
-        if (keyCode == 32) {
-          jumper.jump();
-        }
+        keyCode == 32 ? jumper.jump() : {};
         
-        if (keyCode == 73) {
-          jumper.invincible = !jumper.invincible;
-        }
+        // toggle invincibility
+        keyCode == 73 ? jumper.invincible = !jumper.invincible : {};
 
         // pause barriers on p keypress
         if (keyCode == 80) {
@@ -106,11 +104,6 @@
 
           paused ? noLoop() : loop();
         }
-      }
-
-      // for mobile
-      function mousePressed() {
-        jumper.jump();
       }
     </script>
   </body>

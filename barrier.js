@@ -17,7 +17,7 @@ function barrier() {
       this.x = winW + random(this.width/2,winW);
       this.y = random(winH);
       this.height = random(100,200);
-      this.velocity += 0.5;
+      this.velocity += 0.25;
       this.passed = false;
     }
 
