@@ -27,6 +27,7 @@
         createCanvas(winW,winH);
 
         rectMode(CENTER);
+        noStroke();
 
         jumper = new jumper();
 
@@ -35,10 +36,7 @@
         }
 
         jumper.display();
-
-        barriers.forEach(barrier => {
-          barrier.display();
-        });
+        barriers.forEach(barrier => barrier.display());
       }
       
       function draw() {
