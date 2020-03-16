@@ -45,7 +45,7 @@ function jumper() {
   }
 
   // function that will take take initial velocity and modify by opposing gravity
-  this.up = () => {
+  this.jump = () => {
     this.velocity += this.lift;    
   }
 }

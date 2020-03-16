@@ -68,6 +68,11 @@
         jumper.update();
         barriers.forEach(barrier => barrier.update());
 
+        fill(0);
+        textAlign(LEFT,TOP);
+        textSize(25);
+        text(`score: ${score}`,20,20);
+        
         // display end game message
         if (end) {
           fill(0);
@@ -76,16 +81,18 @@
           text('GAME OVER',winW/2,winH/2);
         }
 
-        fill(0);
-        textAlign(LEFT,TOP);
-        textSize(25);
-        text(`score: ${score}`,20,20);
+        if (paused && !end) {
+          fill(0);
+          textAlign(CENTER);
+          textSize(75);
+          text('PAUSED',winW/2,winH/2);
+        }
       }
       
       function keyPressed() {
         // jump
         if (keyCode == 32) {
-          jumper.up();
+          jumper.jump();
         }
         
         if (keyCode == 73) {
@@ -96,14 +103,13 @@
         if (keyCode == 80) {
           paused = !paused;
 
-          if (paused) {noLoop()}
-          else {loop()}
+          paused ? noLoop() : loop();
         }
       }
 
       // for mobile
       function mousePressed() {
-        jumper.up();
+        jumper.jump();
       }
     </script>
   </body>
