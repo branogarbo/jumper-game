@@ -16,7 +16,7 @@
       var winW = window.innerWidth;
       var winH = window.innerHeight;
 
-      var jumper1,jumper2;
+      var jumper;
       var barriers = [];
       var paused = false;
       var end = false;
@@ -28,15 +28,13 @@
 
         rectMode(CENTER);
 
-        jumper1 = new jumper(65,68,83);
-        jumper2 = new jumper(37,39,40);
+        jumper = new jumper();
 
         for (i = 0; i < barrierCount; i++) {
           barriers.push(new barrier());
         }
 
-        jumper1.display();
-        jumper2.display();
+        jumper.display();
 
         barriers.forEach(barrier => {
           barrier.display();
@@ -47,13 +45,11 @@
         clear();
 
         // display game elements
-        jumper1.display();
-        jumper2.display();
+        jumper.display();
         barriers.forEach(barrier => barrier.display());
         
         // update game elements
-        jumper1.update();
-        jumper2.update();
+        jumper.update();
         barriers.forEach(barrier => barrier.update());
 
         // display score
@@ -81,12 +77,10 @@
       
       function keyPressed() {
         // jump
-        keyCode == 87 ? jumper1.jump() : {};
-        keyCode == 38 ? jumper2.jump() : {};
+        keyCode == 32 ? jumper.jump() : {};
         
         // toggle invincibility
-        keyCode == 73 ? jumper1.invincible = !jumper1.invincible : {};
-        keyCode == 79 ? jumper2.invincible = !jumper2.invincible : {};
+        keyCode == 73 ? jumper.invincible = !jumper.invincible : {};
 
         // pause barriers on p keypress
         if (keyCode == 80) {

@@ -1,4 +1,4 @@
-function jumper(left,right,down) {
+function jumper() {
   this.radius = 25;
   this.x = winW/4;
   this.y = winH/2;
@@ -44,11 +44,11 @@ function jumper(left,right,down) {
     }
 
     // move jumper laterally
-    keyIsDown(left) && this.x > 25 ? this.x -= 10 : {}; // a
-    keyIsDown(right) && this.x < winW-25 ? this.x += 10 : {}; // d
+    keyIsDown(65) && this.x > 25 ? this.x -= 10 : {}; // a
+    keyIsDown(68) && this.x < winW-25 ? this.x += 10 : {}; // d
 
     // gravity boost
-    keyIsDown(down) ? this.gravity = 1.5 : this.gravity = 0.5;
+    keyIsDown(83) ? this.gravity = 1.5 : this.gravity = 0.5;
 
     // check each barrier for collision
     barriers.forEach(barrier => {
