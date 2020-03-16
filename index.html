@@ -23,7 +23,7 @@
       var barrierCount = 5;
       
       function setup() {
-        createCanvas(windowWidth,windowHeight);
+        createCanvas(winW,winH);
 
         rectMode(CENTER);
 
@@ -55,7 +55,7 @@
         barriers.forEach(barrier => {
           if (!jumper.invincible && collideRectCircle(barrier.x - barrier.width/2, barrier.y - barrier.height/2, barrier.width, barrier.height, jumper.x, jumper.y, 2*jumper.radius)) {
             barriers.forEach(barrier => barrier.slow());
-            
+
             end = true;
           }
         });
@@ -99,6 +99,11 @@
           if (paused) {noLoop()}
           else {loop()}
         }
+      }
+
+      // for mobile
+      function mousePressed() {
+        jumper.up();
       }
     </script>
   </body>

@@ -36,15 +36,13 @@ function jumper() {
       this.y = winH - this.radius;
       this.velocity = 0;
     }
-    
+
     // this prevents jumper from going through ceiling
     if (this.y < this.radius) {
       this.y = this.radius;
       this.velocity = 0;
     }
   }
-
-  this.jumpcount = 0;
 
   // function that will take take initial velocity and modify by opposing gravity
   this.up = () => {
