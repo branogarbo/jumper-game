@@ -29,12 +29,11 @@
         rectMode(CENTER);
         noStroke();
 
+        // create game elements
         jumper = new jumper();
+        for (i = 0; i < barrierCount; i++) {barriers.push(new barrier())}
 
-        for (i = 0; i < barrierCount; i++) {
-          barriers.push(new barrier());
-        }
-
+        // display game elements
         jumper.display();
         barriers.forEach(barrier => barrier.display());
       }
