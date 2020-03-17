@@ -6,16 +6,31 @@ function jumper() {
   this.lift = -20; // force opposing gravity when i jump
   this.velocity = 0; // speed of gravity force
   this.invincible = false;
+  this.invhue = 50;
 
   // function to display on screen. this is where i put my values of what the jumper will look like
   this.display = () => {
     // invincibility toggle
     if (this.invincible) {
-      fill('green');
+      
+      if (this.invhue == 0) {
+        this.invhue += 1;
+      }
+      else if (this.invhue == 100) {
+        this.invhue -= 1;
+      }
+      else {
+        this.invhue += (-1)**floor(random(2));
+      }
+      
+      push();
+      colorMode(HSL,100);
+      fill(this.invhue,100,50);
       ellipse(this.x,this.y,this.radius*2);
+      pop();
       
       textSize(20);
-      fill(0);
+      fill(255);
       textAlign(CENTER,CENTER);
       text('invincible',this.x,this.y);
     }

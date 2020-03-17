@@ -41,6 +41,7 @@
       
       function draw() {
         clear();
+        background(0);
 
         // display game elements
         jumper.display();
@@ -51,14 +52,14 @@
         barriers.forEach(barrier => barrier.update());
 
         // display score
-        fill(0);
+        fill(255);
         textAlign(LEFT,TOP);
-        textSize(25);
+        textSize(30);
         text(`score: ${score}`,20,20);
         
         // display end message if game ends
         if (end) {
-          fill(0);
+          fill(255);
           textAlign(CENTER);
           textSize(100);
           text('GAME OVER',winW/2,winH/2);
@@ -66,7 +67,7 @@
 
         // display pause message if paused
         if (paused && !end) {
-          fill(0);
+          fill(255);
           textAlign(CENTER);
           textSize(75);
           text('PAUSED',winW/2,winH/2);
@@ -75,7 +76,7 @@
       
       function keyPressed() {
         // jump
-        keyCode == 32 ? jumper.jump() : {};
+        keyCode == 32 && paused != true ? jumper.jump() : {};
         
         // toggle invincibility
         keyCode == 73 ? jumper.invincible = !jumper.invincible : {};
