@@ -24,9 +24,7 @@ function barrier() {
       this.color = [random(100),100,50];
     }
     
-    if (this.slowing) {
-      this.velocity *= 19/20;
-    }
+    this.slowing ? this.velocity *= 19/20 : {};
 
     if (this.x < jumper.x) {
       if (!this.passed && !end) {

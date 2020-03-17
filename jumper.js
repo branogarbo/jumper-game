@@ -12,16 +12,9 @@ function jumper() {
   this.display = () => {
     // invincibility toggle
     if (this.invincible) {
-      
-      if (this.invhue == 0) {
-        this.invhue += 1;
-      }
-      else if (this.invhue == 100) {
-        this.invhue -= 1;
-      }
-      else {
-        this.invhue += (-1)**floor(random(2));
-      }
+      if (this.invhue == 0) {this.invhue += 1}
+      else if (this.invhue == 100) {this.invhue -= 1}
+      else {this.invhue += (-1)**floor(random(2))}
       
       push();
       colorMode(HSL,100);
@@ -76,7 +69,5 @@ function jumper() {
   }
 
   // function that will take take initial velocity and modify by opposing gravity
-  this.jump = () => {
-    this.velocity += this.lift;    
-  }
+  this.jump = () => this.velocity += this.lift;
 }
