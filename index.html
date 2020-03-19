@@ -79,8 +79,8 @@
         // toggle invincibility
         keyCode == 73 ? jumper.invincible = !jumper.invincible : {};
 
-        // pause barriers on p keypress
-        if (keyCode == 80) {
+        // pause game on p keypress
+        if (keyCode == 80 && !end) {
           paused = !paused;
 
           paused ? noLoop() : loop();
