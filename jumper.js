@@ -4,7 +4,8 @@ function jumper() {
   this.y = winH/2;
   this.gravity = 0.5; // force of gravity
   this.lift = -20; // force opposing gravity when i jump
-  this.velocity = 0; // speed of gravity force
+  this.velocityX = 10;
+  this.velocityY = 0;
   this.invincible = false;
   this.invhue = 50;
 
@@ -35,25 +36,25 @@ function jumper() {
 
   // this will continuously update the jumper
   this.update = () => {
-    this.velocity += this.gravity;
-    this.velocity *= 0.95; // air resistance
-    this.y += this.velocity;
+    this.velocityY += this.gravity;
+    this.velocityY *= 0.95; // air resistance
+    this.y += this.velocityY;
     
     // this prevents jumper from falling through ground
     if (this.y > winH - this.radius) {
       this.y = winH - this.radius;
-      this.velocity = 0;
+      this.velocityY = 0;
     }
 
     // this prevents jumper from going through ceiling
     if (this.y < this.radius) {
       this.y = this.radius;
-      this.velocity = 0;
+      this.velocityY = 0;
     }
 
     // move jumper laterally
-    keyIsDown(65) && this.x > 25 ? this.x -= 10 : {}; // a
-    keyIsDown(68) && this.x < winW-25 ? this.x += 10 : {}; // d
+    keyIsDown(65) && this.x > 25 ? this.x -= this.velocityX : {}; // a
+    keyIsDown(68) && this.x < winW-25 ? this.x += this.velocityX : {}; // d
 
     // gravity boost
     keyIsDown(83) ? this.gravity = 1.5 : this.gravity = 0.5;
@@ -69,5 +70,5 @@ function jumper() {
   }
 
   // function that will take take initial velocity and modify by opposing gravity
-  this.jump = () => this.velocity += this.lift;
+  this.jump = () => this.velocityY += this.lift;
 }
