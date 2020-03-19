@@ -58,7 +58,7 @@
         // display end message if game ends
         if (end) {
           fill(255);
-          textAlign(CENTER);
+          textAlign(CENTER,CENTER);
           textSize(100);
           text('GAME OVER',winW/2,winH/2);
         }
@@ -66,7 +66,7 @@
         // display pause message if paused
         if (paused && !end) {
           fill(255);
-          textAlign(CENTER);
+          textAlign(CENTER,CENTER);
           textSize(75);
           text('PAUSED',winW/2,winH/2);
         }
