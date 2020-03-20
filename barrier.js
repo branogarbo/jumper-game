@@ -9,9 +9,11 @@ function barrier() {
   this.color = [random(100),100,50];
 
   this.display = () => {
+    push();
     colorMode(HSL,100);
     fill(this.color);
     rect(this.x,this.y,this.width,this.height);
+    pop();
   }
 
   this.update = () => {

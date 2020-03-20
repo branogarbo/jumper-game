@@ -21,12 +21,12 @@ function jumper() {
       colorMode(HSL,100);
       fill(this.invhue,100,50);
       ellipse(this.x,this.y,this.radius*2);
-      pop();
       
       textSize(20);
       fill(255);
       textAlign(CENTER,CENTER);
       text('invincible',this.x,this.y);
+      pop();
     }
     else {
       fill('red');

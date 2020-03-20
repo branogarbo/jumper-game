@@ -71,10 +71,10 @@
           text('PAUSED',winW/2,winH/2);
         }
       }
-      
+
       function keyPressed() {
         // jump
-        keyCode == 32 && paused != true ? jumper.jump() : {};
+        keyCode == 32 && !paused ? jumper.jump() : {};
         
         // toggle invincibility
         keyCode == 73 ? jumper.invincible = !jumper.invincible : {};
